@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "passman_user",
+    "password": "passman_pass",
+    "database": "passman_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "passman_user",
+    "password": "passman_pass",
+    "database": "passman_database_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
+  }
+}
