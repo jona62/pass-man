@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const passport = require("../middlewares/authentication");
-const { Post } = db;
+const { Accounts } = db;
 
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
@@ -12,64 +12,56 @@ const { Post } = db;
 //    PUT    /posts/:id
 //    DELETE /posts/:id
 
-// There are other styles for creating these route handlers, we typically
-// explore other patterns to reduce code duplication.
-// TODO: Can you spot where we have some duplication below?
-
 router.get("/", (req, res) => {
-  Post.findAll({}).then(posts => res.json(posts));
+  Post.findAll({}).then((posts) => res.json(posts));
 });
 
 router.post("/", (req, res) => {
-  Post.create({
-    description: req.body.description,
-    tag: req.body.tag,
-    title: req.body.title,
-    playlist: req.body.playlist,
-    image: req.body.image,
-    userId: req.body.id
+  Accounts.create({
+    website: req.body.website,
+    username: req.body.username,
+    password: req.body.passport,
   })
-    .then(post => {
-      res.status(201).json(post);
-      console.log(post);
+    .then((account) => {
+      res.status(201).json(account);
+      console.log(account);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  Post.findByPk(id).then(post => {
-    if (!post) {
+  Accounts.findByPk(id).then((account) => {
+    if (!account) {
       return res.sendStatus(404);
     }
 
-    res.json(post);
+    res.json(account);
   });
 });
 
 router.put("/", (req, res) => {
   const id = req.body.userId;
-  Post.findAll({
+  Accounts.findAll({
     where: {
-      userId: id
-    }
-  }).then(post => {
-    if (!post) {
+      userId: id,
+    },
+  }).then((account) => {
+    if (!account) {
       return res.sendStatus(404);
     }
 
-    post.description = req.body.description;
-    post.tag = req.body.tag;
-    post.title = req.body.title;
-    post.playlist = req.body.playlist;
-    post
+    account.website = req.body.website;
+    account.username = req.body.username;
+    account.password = req.body.password;
+    account
       .save()
-      .then(post => {
-        res.json(post);
+      .then((account) => {
+        res.json(account);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(400).json(err);
       });
   });
@@ -77,12 +69,12 @@ router.put("/", (req, res) => {
 
 router.delete("/:id", passport.isAuthenticated(), (req, res) => {
   const { id } = req.params;
-  Post.findByPk(id).then(post => {
-    if (!post) {
+  Accounts.findByPk(id).then((post) => {
+    if (!account) {
       return res.sendStatus(404);
     }
 
-    post.destroy();
+    account.destroy();
     res.sendStatus(204);
   });
 });

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // Load each controller
-const authController = require("./auth");
+const authController = require("./auth.js");
 const postsController = require("./posts.js");
 const appConfigController = require("./appConfig.js");
 
