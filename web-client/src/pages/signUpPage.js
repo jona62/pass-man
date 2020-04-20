@@ -3,7 +3,7 @@ import React from "react";
 import "./loginPage.css";
 import TextInput from "../common/textInput";
 import validate from "../common/validate";
-// import auth from "../services/auth";
+import auth from "../services/auth";
 import { Link, Redirect } from "react-router-dom";
 
 class SignUpPage extends React.Component {
@@ -21,8 +21,8 @@ class SignUpPage extends React.Component {
           touched: false,
           validationRules: {
             minLength: 3,
-            isRequired: true
-          }
+            isRequired: true,
+          },
         },
         last_name: {
           value: "",
@@ -31,8 +31,8 @@ class SignUpPage extends React.Component {
           touched: false,
           validationRules: {
             minLength: 3,
-            isRequired: true
-          }
+            isRequired: true,
+          },
         },
         email: {
           value: "",
@@ -40,8 +40,8 @@ class SignUpPage extends React.Component {
           valid: false,
           touched: false,
           validationRules: {
-            isEmail: true
-          }
+            isEmail: true,
+          },
         },
         password: {
           value: "",
@@ -49,22 +49,22 @@ class SignUpPage extends React.Component {
           valid: false,
           touched: false,
           validationRules: {
-            isPassword: true
-          }
-        }
-      }
+            isPassword: true,
+          },
+        },
+      },
     };
   }
 
-  changeHandler = event => {
+  changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     const updatedControls = {
-      ...this.state.formControls
+      ...this.state.formControls,
     };
     const updatedFormElement = {
-      ...updatedControls[name]
+      ...updatedControls[name],
     };
     updatedFormElement.value = value;
     updatedFormElement.touched = true;
@@ -82,32 +82,32 @@ class SignUpPage extends React.Component {
 
     this.setState({
       formControls: updatedControls,
-      formIsValid: formIsValid
+      formIsValid: formIsValid,
     });
   };
 
-  formSubmitHandler = e => {
+  formSubmitHandler = (e) => {
     e.preventDefault();
     const formData = {};
     for (let formElementId in this.state.formControls) {
       formData[formElementId] = this.state.formControls[formElementId].value;
     }
-    // auth.signup(formData).then(user => {
-    //   this.setState({ userId: user.id });
-    // });
+    auth.signup(formData).then((user) => {
+      this.setState({ userId: user.id });
+    });
   };
 
   render() {
-    // if (auth.isAuthenticated) {
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: "/home",
-    //         id: this.state.userId
-    //       }}
-    //     />
-    //   );
-    // }
+    if (auth.isAuthenticated) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/home",
+            id: this.state.userId,
+          }}
+        />
+      );
+    }
     return (
       <div
         className="Container"
@@ -117,7 +117,7 @@ class SignUpPage extends React.Component {
           position: "fixed",
           top: "-10vh",
           left: "-10vw",
-          zIndex: -1
+          zIndex: -1,
         }}
       >
         <div className="logcard signupl">

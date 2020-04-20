@@ -13,17 +13,17 @@ const auth = {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           console.log("Login Failed");
           return;
         }
         return response.json();
       })
-      .then(body => {
+      .then((body) => {
         this.isAuthenticated = true;
         this.emailAddress = email;
         return body;
@@ -34,18 +34,18 @@ const auth = {
       method: "POST",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(formData),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           console.log("Registration Failed");
           return;
         }
         return response.json();
       })
-      .then(body => {
+      .then((body) => {
         this.emailAddress = formData.email;
         this.isAuthenticated = true;
         return body;
@@ -55,21 +55,21 @@ const auth = {
     return fetch("/api/auth/logout", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error("Logout Failed");
         }
 
         return response.json();
       })
-      .then(body => {
+      .then((body) => {
         this.isAuthenticated = false;
         return body;
       });
-  }
+  },
 };
 
 export default auth;
