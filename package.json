@@ -1,35 +1,39 @@
 {
-  "name": "pass-man",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
-  },
+  "name": "api-backend",
+  "version": "1.0.0",
+  "description": "An api backend",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "node api/app.js",
+    "dev": "nodemon -r dotenv/config api/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm install && npm run build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "author": "Jonathan James",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.19.2",
+    "sqlite3": "^4.1.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "devDependencies": {
+    "dotenv": "^8.1.0",
+    "nodemon": "^1.19.3",
+    "sequelize-cli": "^5.5.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "client/"
     ]
   }
 }
