@@ -2,37 +2,33 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Accounts extends Model {}
+  class Account extends Model {}
 
-  Accounts.init(
+  Account.init(
     {
       website: {
         type: DataTypes.STRING,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       username: {
         type: DataTypes.STRING,
         validate: {
-          notEmpty: true
-        }
+          notEmpty: true,
+        },
       },
       password: {
         type: DataTypes.STRING,
         validate: {
-          notEmpty: true
-        }
-      }
+          notEmpty: true,
+        },
+      },
     },
     {
       sequelize,
-      modelName: "accounts"
+      modelName: "account",
     }
   );
-
-  Accounts.associate = models => {
-    models.Accounts.belongsTo(models.User);
-  };
-  return Accounts;
+  return Account;
 };
