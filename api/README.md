@@ -2,13 +2,13 @@
 
 In the project directory, you can run:
 
-### Create Database user
+### `createuser -P -s -e passman_user`
 
-createuser -P -s -e passman_user
+Create Database user
 
-### Create Database
+### `createdb -h localhost -U passman_user passman_db`
 
-createdb -h localhost -U passman_user passman_db
+Create Database
 
 ### `npm start`
 
