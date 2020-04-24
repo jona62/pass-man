@@ -6,7 +6,7 @@ const path = require("path");
 const db = require("./models");
 const passport = require("./middlewares/authentication");
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 
 // this lets us parse 'application/json' content in http requests
 app.use(bodyParser.json());
@@ -14,9 +14,11 @@ app.use(bodyParser.json());
 // setup passport and session cookies
 app.use(
   expressSession({
-    secret: process.env.SESSION_SECRET || "akjehfobsofb0wef0099349G",
+    secret:
+      process.env.SESSION_SECRET ||
+      "aubO59PASDZA9Q3YGRVEGRF9ERFIK23LFO9SVKkshv93",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 app.use(passport.initialize());
@@ -34,7 +36,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
   // all unknown routes should be handed to our react app
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
   });
 }
