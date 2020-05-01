@@ -7,6 +7,7 @@ class AccountFormPage extends React.Component {
   state = {
     error: false,
     success: false,
+    formIsValid: false,
     formControls: {
       website: {
         value: "",
@@ -70,7 +71,7 @@ class AccountFormPage extends React.Component {
     });
   };
 
-  savePost = (event) => {
+  formSubmitHandler = (event) => {
     event.preventDefault();
     const formData = {};
     for (let formElementId in this.state.formControls) {
@@ -82,14 +83,14 @@ class AccountFormPage extends React.Component {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ website: formData }),
+      body: JSON.stringify(formData),
     })
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
 
-        throw new Error("Content validation");
+        throw new Error("Account validation");
       })
       .then((account) => {
         this.setState({
@@ -119,7 +120,7 @@ class AccountFormPage extends React.Component {
       <div className="col-10 col-md-8 col-lg-7">
         {errorMessage}
         <div className="input-group">
-          <form>
+          <form onSubmit={this.formSubmitHandler}>
             <TextInput
               name="website"
               type={"text"}
@@ -147,10 +148,12 @@ class AccountFormPage extends React.Component {
               touched={this.state.formControls.password.touched}
               valid={this.state.formControls.password.value}
             />
+            <input
+              type="submit"
+              name="login"
+              disabled={!this.state.formIsValid}
+            />
           </form>
-          <button className="btn btn-primary" onClick={this.savePost}>
-            Save Post
-          </button>
         </div>
       </div>
     );
