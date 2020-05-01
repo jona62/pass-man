@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const passport = require("../middlewares/authentication");
-const { Accounts } = db;
+const { account } = db;
 
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
@@ -13,14 +13,14 @@ const { Accounts } = db;
 //    DELETE /posts/:id
 
 router.get("/", (req, res) => {
-  Post.findAll({}).then((posts) => res.json(posts));
+  Accounts.findAll({}).then((accounts) => res.json(accounts));
 });
 
 router.post("/", (req, res) => {
   Accounts.create({
     website: req.body.website,
     username: req.body.username,
-    password: req.body.passport,
+    password: req.body.password,
   })
     .then((account) => {
       res.status(201).json(account);

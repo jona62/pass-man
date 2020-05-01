@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 const bcrypt = require("bcryptjs");
-const Account = require("./accounts");
+const Accounts = require("./accounts");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {}
@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // User.hasMany(Account, { as: "account", foreignKey: "userId" });
   User.associate = (models) => {
-    models.User.hasMany(models.Account);
+    models.User.hasMany(models.Accounts);
   };
 
   return User;

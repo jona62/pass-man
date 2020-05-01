@@ -1,20 +1,34 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import Account from "../components/account";
+import Loading from "../components/loading";
 
 class HomePage extends React.Component {
+  state = {
+    accounts: [],
+    loading: true,
+  };
+
+  componentDidMount() {
+    fetch("/api/accounts")
+      .then((res) => res.json())
+      .then((accounts) => {
+        this.setState({
+          loading: false,
+          accounts: accounts.map((p, ii) => <Account {...p} key={ii} />),
+        });
+      })
+      .catch((err) => console.log("API ERROR: ", err));
+  }
+
   render() {
+    if (this.state.loading) {
+      return <Loading />;
+    }
+
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3 appContainer">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <NavLink
-              className="navbar-brand nav-link2 "
-              exact
-              to="/home"
-            ></NavLink>
-          </li>
-        </ul>
-      </nav>
+      <div className="container-fluid text-center">
+        <div className="row justify-content-center">{this.state.accounts}</div>
+      </div>
     );
   }
 }

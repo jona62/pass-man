@@ -2,9 +2,9 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Account extends Model {}
+  class Accounts extends Model {}
 
-  Account.init(
+  Accounts.init(
     {
       website: {
         type: DataTypes.STRING,
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "account",
+      modelName: "accounts",
     }
   );
-  return Account;
+  return Accounts;
 };
