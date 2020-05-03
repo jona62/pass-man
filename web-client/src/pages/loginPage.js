@@ -12,7 +12,7 @@ class LoginPage extends React.Component {
     this.state = {
       isAuthenticated: false,
       userId: null,
-      formIsValid: false, //we will use this to track the overall form validity
+      formIsValid: false, // we will use this to track the overall form validity
       formControls: {
         email: {
           value: "",
@@ -20,8 +20,8 @@ class LoginPage extends React.Component {
           valid: false,
           touched: false,
           validationRules: {
-            isEmail: true
-          }
+            isEmail: true,
+          },
         },
         password: {
           value: "",
@@ -29,22 +29,22 @@ class LoginPage extends React.Component {
           valid: false,
           touched: false,
           validationRules: {
-            isPassword: true
-          }
-        }
-      }
+            isPassword: true,
+          },
+        },
+      },
     };
   }
 
-  changeHandler = event => {
+  changeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
 
     const updatedControls = {
-      ...this.state.formControls
+      ...this.state.formControls,
     };
     const updatedFormElement = {
-      ...updatedControls[name]
+      ...updatedControls[name],
     };
     updatedFormElement.value = value;
     updatedFormElement.touched = true;
@@ -62,31 +62,32 @@ class LoginPage extends React.Component {
 
     this.setState({
       formControls: updatedControls,
-      formIsValid: formIsValid
+      formIsValid: formIsValid,
     });
   };
 
-  formSubmitHandler = e => {
+  formSubmitHandler = (e) => {
     e.preventDefault();
     const formData = {};
     for (let formElementId in this.state.formControls) {
       formData[formElementId] = this.state.formControls[formElementId].value;
     }
     const { email, password } = formData;
-    auth.authenticate(email, password).then(user => {
+    auth.authenticate(email, password).then((user) => {
+      console.log(user);
       this.setState({
-        isAuthenticated: true
+        isAuthenticated: true,
       });
     });
   };
 
   render() {
     if (this.state.isAuthenticated) {
-      const { pathname } = this.props.history.location.state.from || "/home";
+      const { pathname } = this.props.history.location.from || "/home";
       return (
         <Redirect
           to={{
-            pathname: pathname
+            pathname: pathname,
           }}
         />
       );
@@ -101,7 +102,7 @@ class LoginPage extends React.Component {
           position: "fixed",
           top: "-20vh",
           left: "-10vw",
-          zIndex: -1
+          zIndex: -1,
         }}
       >
         <div className="logcard">

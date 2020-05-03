@@ -9,7 +9,7 @@ class HomePage extends React.Component {
   };
 
   componentDidMount() {
-    fetch("/api/accounts")
+    fetch("/api/accounts/")
       .then((res) => res.json())
       .then((accounts) => {
         this.setState({
