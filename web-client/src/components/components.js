@@ -4,9 +4,6 @@ import Entries from "./entries";
 import Entry from "./entry";
 import Header from "./header";
 import FontAwesomeIcon from "./icon";
-import Login from "./login";
-import SignUp from "./signup";
-import Main from "./main";
 import Profile from "./profile";
 import SideMenu from "./side-menu";
 
@@ -17,9 +14,6 @@ export {
   Entry,
   Header,
   FontAwesomeIcon,
-  Login,
-  SignUp,
-  Main,
   Profile,
   SideMenu,
 };
