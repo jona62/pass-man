@@ -1,7 +1,6 @@
 import React from "react";
-import "./style.css";
 
-const TextInput = props => {
+const TextInput = (props) => {
   let formControl = "form-control";
 
   if (props.touched && !props.valid) {

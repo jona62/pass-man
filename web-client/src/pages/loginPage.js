@@ -1,10 +1,17 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
-import "./loginPage.css";
-import TextInput from "../common/textInput";
+import Logo from "../img/Logo.png";
 import validate from "../common/validate";
 import auth from "../services/auth.js";
 import { Link, Redirect } from "react-router-dom";
+
+const style = {
+  height: "100vh",
+  width: "100%",
+};
+
+const styleImg = {
+  width: "200px",
+};
 
 class LoginPage extends React.Component {
   constructor() {
@@ -12,7 +19,7 @@ class LoginPage extends React.Component {
     this.state = {
       isAuthenticated: false,
       userId: null,
-      formIsValid: false, // we will use this to track the overall form validity
+      formIsValid: false,
       formControls: {
         email: {
           value: "",
@@ -74,7 +81,6 @@ class LoginPage extends React.Component {
     }
     const { email, password } = formData;
     auth.authenticate(email, password).then((user) => {
-      console.log(user);
       this.setState({
         isAuthenticated: true,
       });
@@ -92,54 +98,65 @@ class LoginPage extends React.Component {
         />
       );
     }
-
     return (
       <div
-        className="Container"
-        style={{
-          width: "120vw",
-          height: "120vh",
-          position: "fixed",
-          top: "-20vh",
-          left: "-10vw",
-          zIndex: -1,
-        }}
+        style={style}
+        className="d-flex flex-column justify-content-center align-items-center"
       >
-        <div className="logcard">
-          <h1>Login</h1>
-          <form onSubmit={this.formSubmitHandler}>
-            <TextInput
-              name="email"
-              type={"email"}
-              placeholder={this.state.formControls.email.placeholder}
-              value={this.state.formControls.email.value}
-              onChange={this.changeHandler}
-              touched={this.state.formControls.email.touched}
-              valid={this.state.formControls.email.value}
-            />
-            <TextInput
-              name="password"
-              type={"password"}
-              placeholder={this.state.formControls.password.placeholder}
-              value={this.state.formControls.password.value}
-              onChange={this.changeHandler}
-              touched={this.state.formControls.password.touched}
-              valid={this.state.formControls.password.value}
-            />
+        <img className="pt-5 pb-5" style={styleImg} alt="Logo" src={Logo} />
+        <div className="card w-50 pt-3 pl-5 pr-5 border-0">
+          <h1 className="pb-5">Login</h1>
 
-            <input
-              type="submit"
-              name="login"
-              disabled={!this.state.formIsValid}
-            />
+          <form className="w-100" onSubmit={this.formSubmitHandler}>
+            <div className="row w-100">
+              <div className="col-sm-8 pt-1 pb-3 text-muted">
+                <label for="email">Email Address</label>
+                <small className="email-error text-danger pl-4"></small>
+                <input
+                  className="form-control email"
+                  type="email"
+                  name="email"
+                  placeholder={this.state.formControls.email.placeholder}
+                  value={this.state.formControls.email.value}
+                  onChange={this.changeHandler}
+                  touched={this.state.formControls.email.touched}
+                  valid={this.state.formControls.email.value}
+                  required
+                />
+              </div>
+
+              <div className="col-sm-8 pt-1 pb-3 text-muted">
+                <label for="password">Password</label>
+                <small className="password-error text-danger pl-4"></small>
+                <input
+                  className="form-control password"
+                  type="password"
+                  name="password"
+                  placeholder={this.state.formControls.password.placeholder}
+                  value={this.state.formControls.password.value}
+                  onChange={this.changeHandler}
+                  touched={this.state.formControls.password.touched}
+                  valid={this.state.formControls.password.value}
+                  required
+                />
+              </div>
+
+              <div className="col-sm-12 pt-3 pb-4">
+                <input
+                  className="btn btn-primary"
+                  type="submit"
+                  name="login"
+                  disabled={!this.state.formIsValid}
+                />
+              </div>
+            </div>
           </form>
-          <div>
-            <p>
-              Not a member?
-              <Link className="nav-link" exact to="/signup">
-                signup
-              </Link>
-            </p>
+
+          <div className="col-sm-12 text-muted">
+            <span>Already have an account?</span>{" "}
+            <Link className="nav-link" exact to="/signup">
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>

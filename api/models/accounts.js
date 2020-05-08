@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const User = "./user";
 
 module.exports = (sequelize, DataTypes) => {
   class Accounts extends Model {}
@@ -30,5 +31,9 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "accounts",
     }
   );
+
+  Accounts.associate = (models) => {
+    models.Accounts.belongsTo(models.User);
+  };
   return Accounts;
 };

@@ -1,17 +1,22 @@
 import React from "react";
-import TextInput from "../common/textInput";
 import validate from "../common/validate";
 import { Redirect } from "react-router-dom";
+import auth from "../services/auth";
 
 class AccountFormPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
+    userId: null,
     error: false,
     success: false,
     formIsValid: false,
     formControls: {
-      website: {
+      account_name: {
         value: "",
-        placeholder: "website",
+        placeholder: "Account Name",
         valid: false,
         touched: false,
         validationRules: {
@@ -40,6 +45,20 @@ class AccountFormPage extends React.Component {
       },
     },
   };
+
+  componentDidMount() {
+    fetch("/api/users/")
+      .then((res) => res.json())
+      .then((users) => {
+        users.forEach((user) => {
+          if (user.email === auth.emailAddress) {
+            this.setState({
+              userId: user.id,
+            });
+          }
+        });
+      });
+  }
 
   changeHandler = (event) => {
     const name = event.target.name;
@@ -77,6 +96,7 @@ class AccountFormPage extends React.Component {
     for (let formElementId in this.state.formControls) {
       formData[formElementId] = this.state.formControls[formElementId].value;
     }
+    formData["userId"] = this.state.userId;
     fetch("/api/accounts/", {
       method: "POST",
       credentials: "include",
@@ -106,7 +126,6 @@ class AccountFormPage extends React.Component {
 
   render() {
     if (this.state.success) return <Redirect to="/home" />;
-
     let errorMessage = null;
     if (this.state.error) {
       errorMessage = (
@@ -115,45 +134,106 @@ class AccountFormPage extends React.Component {
         </div>
       );
     }
-
     return (
-      <div className="col-10 col-md-8 col-lg-7">
-        {errorMessage}
-        <div className="input-group">
-          <form onSubmit={this.formSubmitHandler}>
-            <TextInput
-              name="website"
-              type={"text"}
-              placeholder={this.state.formControls.website.placeholder}
-              value={this.state.formControls.website.value}
-              onChange={this.changeHandler}
-              touched={this.state.formControls.website.touched}
-              valid={this.state.formControls.website.value}
-            />
-            <TextInput
-              name="username"
-              type={"text"}
-              placeholder={this.state.formControls.username.placeholder}
-              value={this.state.formControls.username.value}
-              onChange={this.changeHandler}
-              touched={this.state.formControls.username.touched}
-              valid={this.state.formControls.username.value}
-            />
-            <TextInput
-              name="password"
-              type={"password"}
-              placeholder={this.state.formControls.password.placeholder}
-              value={this.state.formControls.password.value}
-              onChange={this.changeHandler}
-              touched={this.state.formControls.password.touched}
-              valid={this.state.formControls.password.value}
-            />
-            <input
-              type="submit"
-              name="login"
-              disabled={!this.state.formIsValid}
-            />
-          </form>
+      <div
+        class="modal fade"
+        id="addEntryPopup"
+        data-backdrop="static"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="addEntryPopupLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="addEntryPopupLabel">
+                Add Entry
+              </h2>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div className="row">
+                  <div className="col-sm-12 pt-1 pb-3 text-muted">
+                    <label for="account-name">
+                      Account Name <span className="text-danger">*</span>
+                    </label>
+                    <small className="account-name-error text-danger pl-4"></small>
+                    <input
+                      className="form-control account-name"
+                      type="text"
+                      name="account_name"
+                      placeholder={
+                        this.state.formControls.account_name.placeholder
+                      }
+                      value={this.state.formControls.account_name.value}
+                      onChange={this.changeHandler}
+                      touched={this.state.formControls.account_name.touched}
+                      valid={this.state.formControls.account_name.value}
+                      required
+                    />
+                  </div>
+
+                  <div className="col-sm-12 pt-1 pb-3 text-muted">
+                    <label for="username">
+                      Username <span className="text-danger">*</span>
+                    </label>
+                    <small className="username-error text-danger pl-4"></small>
+                    <input
+                      className="form-control username"
+                      type="text"
+                      name="username"
+                      placeholder={this.state.formControls.username.placeholder}
+                      value={this.state.formControls.username.value}
+                      onChange={this.changeHandler}
+                      touched={this.state.formControls.username.touched}
+                      valid={this.state.formControls.username.value}
+                      required
+                    />
+                  </div>
+
+                  <div className="col-sm-12 pt-1 pb-5 text-muted">
+                    <label for="password">
+                      Password <span className="text-danger">*</span>
+                    </label>
+                    <small className="password-error text-danger pl-4"></small>
+                    <input
+                      className="form-control password"
+                      type="password"
+                      name="password"
+                      placeholder={this.state.formControls.password.placeholder}
+                      value={this.state.formControls.password.value}
+                      onChange={this.changeHandler}
+                      touched={this.state.formControls.password.touched}
+                      valid={this.state.formControls.password.value}
+                      required
+                      required
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={() => this.formSubmitHandler}
+              >
+                Add Entry
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );

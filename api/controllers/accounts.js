@@ -3,6 +3,10 @@ const router = express.Router();
 const db = require("../models");
 const passport = require("../middlewares/authentication");
 const { Accounts } = db;
+const AES = require("crypto-js/aes");
+const secret = process.env.secret;
+
+// const AES_ = require("../crypto/AES_");
 
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
@@ -17,10 +21,17 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  const { website, username, password, userId } = req.body;
+  // const encrypted_website = AES.encrypt(req.body.website, secret);
+  // const encrypted_username = AES.encrypt(req.body.username, secret);
+  // const encrypted_password = AES.encrypt(req.body.password, secret);
+  // const encrypted_userId = AES.encrypt(req.body.userId, secret);
+
   Accounts.create({
-    website: req.body.website,
-    username: req.body.username,
-    password: req.body.password,
+    website: website,
+    username: username,
+    password: password,
+    userId: userId,
   })
     .then((account) => {
       res.status(201).json(account);
