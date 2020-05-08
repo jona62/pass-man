@@ -54,7 +54,7 @@ router.get("/:id", (req, res) => {
 });
 
 router.put("/", (req, res) => {
-  const id = req.body.userId;
+  const id = req.body.id;
   Accounts.findAll({
     where: {
       userId: id,
@@ -80,7 +80,7 @@ router.put("/", (req, res) => {
 
 router.delete("/:id", passport.isAuthenticated(), (req, res) => {
   const { id } = req.params;
-  Accounts.findByPk(id).then((post) => {
+  Accounts.findByPk(id).then((account) => {
     if (!account) {
       return res.sendStatus(404);
     }

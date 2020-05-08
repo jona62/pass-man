@@ -1,5 +1,6 @@
 import React from "react";
 import FontAwesomeIcon from "./icon";
+import { Link } from "react-router-dom";
 
 const style = {
   display: "inline-flex",
@@ -31,13 +32,17 @@ const Entry = (props) => {
 
         <div className="col-auto text-muted align-self-end justify-content-end">
           <button className="btn btn-link text-muted">Copy</button>
-          <button
-            className="btn btn-link text-muted"
-            data-toggle="modal"
-            data-target="#staticBackdrop"
-          >
-            Edit
-          </button>
+          <Link to={"/accounts/" + props.id}>
+            {
+              <button
+                className="btn btn-link text-muted"
+                data-toggle="modal"
+                data-target="#staticBackdrop"
+              >
+                Edit
+              </button>
+            }
+          </Link>
         </div>
       </div>
       <hr />

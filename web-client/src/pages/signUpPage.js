@@ -136,7 +136,7 @@ class SignUpPage extends React.Component {
           <form className="w-100" onSubmit={this.formSubmitHandler}>
             <div className="row w-100">
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="name">First Name</label>
+                <label hmtlFor="name">First Name</label>
                 <small className="name-error text-danger pl-4"></small>
                 <input
                   className="form-control full-name"
@@ -152,7 +152,7 @@ class SignUpPage extends React.Component {
               </div>
 
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="name">Last Name</label>
+                <label hmtlFor="name">Last Name</label>
                 <small className="name-error text-danger pl-4"></small>
                 <input
                   className="form-control full-name"
@@ -168,7 +168,7 @@ class SignUpPage extends React.Component {
               </div>
 
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="email">Email Address</label>
+                <label hmtlFor="email">Email Address</label>
                 <small className="email-error text-danger pl-4"></small>
                 <input
                   className="form-control email"
@@ -184,7 +184,7 @@ class SignUpPage extends React.Component {
               </div>
 
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="password">Password</label>
+                <label hmtlFor="password">Password</label>
                 <small className="password-error text-danger pl-4"></small>
                 <input
                   className="form-control password"
@@ -200,7 +200,7 @@ class SignUpPage extends React.Component {
               </div>
 
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="repeat-password">Repeat Password</label>
+                <label hmtlFor="repeat-password">Repeat Password</label>
                 <small className="repeat-password-error text-danger pl-4"></small>
                 <input
                   className="form-control repeat-password"

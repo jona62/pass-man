@@ -110,7 +110,7 @@ class LoginPage extends React.Component {
           <form className="w-100" onSubmit={this.formSubmitHandler}>
             <div className="row w-100">
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="email">Email Address</label>
+                <label htmlFor="email">Email Address</label>
                 <small className="email-error text-danger pl-4"></small>
                 <input
                   className="form-control email"
@@ -126,7 +126,7 @@ class LoginPage extends React.Component {
               </div>
 
               <div className="col-sm-8 pt-1 pb-3 text-muted">
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <small className="password-error text-danger pl-4"></small>
                 <input
                   className="form-control password"

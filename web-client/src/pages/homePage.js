@@ -4,18 +4,18 @@ import Header from "../components/header";
 import auth from "../services/auth";
 import Entries from "../components/entries";
 import SideMenu from "../components/side-menu";
-import AddEntry from "../components/add-entry";
 import { Redirect } from "react-router-dom";
-import EditPopup from "../components/edit-popup";
 
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.onNewEntry = this.onNewEntry.bind(this);
+    this.getKey = this.getKey.bind(this);
   }
 
   state = {
     accounts: [],
+    account_id: "",
     loading: true,
     user: null,
   };
@@ -39,7 +39,9 @@ class HomePage extends React.Component {
             });
           }
         });
-      });
+      })
+      .catch((err) => console.log("API ERROR: ", err));
+
     fetch("/api/accounts/")
       .then((res) => res.json())
       .then((accounts) => {
@@ -50,16 +52,20 @@ class HomePage extends React.Component {
         });
       })
       .then(() => {
-        this.setState({
-          loading: false,
-        });
-        // setTimeout(() => {
-        //   this.setState({
-        //     loading: false,
-        //   });
-        // }, 400);
+        setTimeout(() => {
+          this.setState({
+            loading: false,
+          });
+        }, 400);
       })
       .catch((err) => console.log("API ERROR: ", err));
+  }
+
+  getKey(id) {
+    console.log("Called ", id);
+    this.setState({
+      account_id: id,
+    });
   }
 
   render() {
@@ -73,9 +79,11 @@ class HomePage extends React.Component {
         <SideMenu user={this.state.user} />
         <div className="col-sm-9">
           <Header />
-          <Entries accounts={this.state.accounts} />
-          <AddEntry addAccounts={this.onNewEntry} />
-          <EditPopup />
+          <Entries
+            accounts={this.state.accounts}
+            onClickHandler={this.getKey}
+          />
+          {/* <EditPopup accountId={this.state.account_id} /> */}
         </div>
       </div>
     );
