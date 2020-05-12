@@ -9,7 +9,7 @@ class Entries extends Component {
           <Entry
             key={account.id}
             id={account.id}
-            // iconName={account.website}
+            iconName={account.website}
             website={account.website}
             username={account.username}
             password={account.password}

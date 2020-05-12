@@ -6,12 +6,24 @@ const style = {
   display: "inline-flex",
 };
 
+const sanitize = (website_name) => {
+  const res = [];
+  for (const ch of website_name) {
+    if (ch != ".") {
+      res.push(ch);
+    } else {
+      break;
+    }
+  }
+  return res.join("");
+};
+
 const Entry = (props) => {
   return (
     <div className="container pt-3 pb-3">
       <div className="row text-muted pt-3">
         <h2 className="pl-3">
-          <FontAwesomeIcon name={props.iconName}></FontAwesomeIcon>
+          <FontAwesomeIcon name={sanitize(props.iconName)} />
           <span className="text-dark">{props.website}</span>
         </h2>
       </div>

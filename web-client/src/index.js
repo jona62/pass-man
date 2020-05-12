@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.min";
 import "jquery/dist/jquery";
 import "popper.js/dist/popper";
-// import "font-awesome/css/font-awesome.min.css";
+import "font-awesome/css/font-awesome.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
