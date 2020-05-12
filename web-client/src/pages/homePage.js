@@ -15,7 +15,6 @@ class HomePage extends React.Component {
 
   state = {
     accounts: [],
-    account_id: "",
     loading: true,
     user: null,
   };
@@ -45,11 +44,15 @@ class HomePage extends React.Component {
     fetch("/api/accounts/")
       .then((res) => res.json())
       .then((accounts) => {
-        accounts.forEach((account) => {
-          if (account.userId === this.state.user.id) {
-            this.state.accounts.push(account);
-          }
-        });
+        setTimeout(() => {
+          accounts.forEach((account) => {
+            if (account.userId === this.state.user.id) {
+              this.setState({
+                accounts: [...this.state.accounts, account],
+              });
+            }
+          });
+        }, 200);
       })
       .then(() => {
         setTimeout(() => {
@@ -72,7 +75,7 @@ class HomePage extends React.Component {
     if (this.state.loading) {
       return <Loading />;
     }
-    if (this.state.success) return <Redirect to="/home" />;
+    // if (this.state.success) return <Redirect to="/home" />;
 
     return (
       <div className="App row">
@@ -83,7 +86,6 @@ class HomePage extends React.Component {
             accounts={this.state.accounts}
             onClickHandler={this.getKey}
           />
-          {/* <EditPopup accountId={this.state.account_id} /> */}
         </div>
       </div>
     );

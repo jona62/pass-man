@@ -13,7 +13,7 @@ class Entries extends Component {
             website={account.website}
             username={account.username}
             password={account.password}
-          ></Entry>
+          />
         ))}
       </div>
     );

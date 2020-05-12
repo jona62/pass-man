@@ -9,7 +9,7 @@ const Profile = (props) => {
     <div style={styling} className="row pl-2 pt-4 pb-4">
       <div className="col-sm-7">
         <p className="text-light">
-          {(props.user.firstName, props.user.lastName)}
+          {props.user.firstName + " " + props.user.lastName}
           <br />
           {props.user.email}
         </p>

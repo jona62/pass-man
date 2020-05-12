@@ -3,10 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const passport = require("../middlewares/authentication");
 const { Accounts } = db;
-const AES = require("crypto-js/aes");
-const secret = process.env.secret;
-
-// const AES_ = require("../crypto/AES_");
+const { encrypt, decrypt } = require("../crypto/ciper");
 
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
@@ -17,15 +14,25 @@ const secret = process.env.secret;
 //    DELETE /posts/:id
 
 router.get("/", (req, res) => {
-  Accounts.findAll({}).then((accounts) => res.json(accounts));
+  Accounts.findAll({}).then((accounts) => {
+    // const account_res = accounts.map((account) => {
+    //   const website = decrypt(account.dataValues.website);
+    //   const username = decrypt(account.dataValues.username);
+    //   const password = decrypt(account.dataValues.password);
+    //   const { id, userId } = account.dataValues;
+    //   return { id, website, username, password, userId };
+    // });
+
+    return res.json(accounts);
+  });
 });
 
 router.post("/", (req, res) => {
   const { website, username, password, userId } = req.body;
-  // const encrypted_website = AES.encrypt(req.body.website, secret);
-  // const encrypted_username = AES.encrypt(req.body.username, secret);
-  // const encrypted_password = AES.encrypt(req.body.password, secret);
-  // const encrypted_userId = AES.encrypt(req.body.userId, secret);
+  // const website = encrypt(req.body.website);
+  // const username = encrypt(req.body.username);
+  // const password = encrypt(req.body.password);
+  // const userId = req.body.password;
 
   Accounts.create({
     website: website,
@@ -48,8 +55,12 @@ router.get("/:id", (req, res) => {
     if (!account) {
       return res.sendStatus(404);
     }
+    const website = decrypt(account.website);
+    const username = decrypt(account.username);
+    const password = decrypt(account.password);
 
-    res.json(account);
+    const { id, userId } = account;
+    res.json({ id, website, username, password, userId });
   });
 });
 
@@ -64,9 +75,9 @@ router.put("/", (req, res) => {
       return res.sendStatus(404);
     }
 
-    account.website = req.body.website;
-    account.username = req.body.username;
-    account.password = req.body.password;
+    account.website = encrypt(req.body.website);
+    account.username = encrypt(req.body.username);
+    account.password = encrypt(req.body.password);
     account
       .save()
       .then((account) => {
