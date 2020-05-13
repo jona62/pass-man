@@ -18,7 +18,19 @@ const sanitize = (website_name) => {
   return res.join("");
 };
 
+
+
 const Entry = (props) => {
+
+  const handleOnMouseOver = (e)=>{
+    e.currentTarget.setAttribute("type","text");
+  }
+
+  const handleOnMouseOut = (e)=>{
+    e.currentTarget.setAttribute("type","password");
+  }
+  
+
   return (
     <div className="container pt-3 pb-3">
       <div className="row text-muted pt-3">
@@ -34,7 +46,9 @@ const Entry = (props) => {
             Username: {props.username} {"    "}{" "}
             <input
               className="form-control form-control-md w-25 ml-4 bg-transparent border-0"
-              type="password"
+              type="password" id="pwd"
+              onMouseOver={handleOnMouseOver}
+              onMouseOut={handleOnMouseOut}
               value={props.password}
               disabled
               style={style}
